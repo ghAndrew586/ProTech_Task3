@@ -19,7 +19,7 @@ namespace ConsoleProgram
                 {
                     Console.Write("В строке должны быть только латинские буквы в нижнем регистре! Неподходящие символы: ");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(Regex.Replace(inputLine, "[a-z]", ""));
+                    Console.WriteLine(Regex.Replace(Regex.Replace(inputLine, "[a-z]", ""), " ", " 'Пробел' "));
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
