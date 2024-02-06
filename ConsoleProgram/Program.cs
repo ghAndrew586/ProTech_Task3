@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace ConsoleProgram
 {
@@ -18,7 +19,7 @@ namespace ConsoleProgram
                 {
                     Console.Write("В строке должны быть только латинские буквы в нижнем регистре! Неподходящие символы: ");
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(Regex.Replace(inputLine, "[a-z]", ""));
+                    Console.WriteLine(Regex.Replace(Regex.Replace(inputLine, "[a-z]", ""), " ", " 'Пробел' "));
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
@@ -32,18 +33,30 @@ namespace ConsoleProgram
             char[] mainLine = inputLine.ToCharArray();
 
             Console.Write("Выход: ");
+            Array.Reverse(mainLine);
+            string resultLine;
+
             if (mainLine.Length % 2 != 0)
             {
-                string unrevLine = new string(mainLine);
+                resultLine = new string(mainLine);
                 Array.Reverse(mainLine);
-                Console.Write(mainLine); Console.WriteLine(unrevLine);
+                resultLine += new string(mainLine);
+
+                Console.WriteLine(resultLine);
             }
             else
             {
-                Array.Reverse(mainLine);
                 var lastSegment = new ArraySegment<char>(mainLine, 0, mainLine.Length / 2);
                 var firstSegment = new ArraySegment<char>(mainLine, mainLine.Length / 2, mainLine.Length / 2);
-                Console.Write(String.Join("", firstSegment)); Console.WriteLine(String.Join("", lastSegment));
+                resultLine = String.Join("", firstSegment) + (String.Join("", lastSegment));
+                Console.WriteLine(resultLine);
+                Array.Reverse(mainLine);
+            }
+
+            foreach (char letter in mainLine)
+            {
+                Console.Write($"Количество '{letter}': ");
+                Console.WriteLine(resultLine.Count(lt => lt == letter));
             }
 
             Console.Write(" . . . Нажмите любую кнопку, чтобы выйти; Enter, чтобы перезапустить  . . . ");
